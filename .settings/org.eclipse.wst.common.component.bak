@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="easy.spring">
-        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+    <wb-module deploy-name="spring.framework">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/src/main/resources"/>
-        <wb-resource deploy-path="/" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
-        <property name="context-root" value="/easy.spring"/>
-        <property name="java-output-path" value="/easy.spring/src/main/webapp/WEB-INF/classes"/>
+        <property name="java-output-path" value="/spring.framework/src/main/webapp/WEB-INF/classes"/>
+        <property name="context-root" value="/spring.framework"/>
     </wb-module>
 </project-modules>
