@@ -17,7 +17,7 @@
                         > 
             
             <!-- 小试牛刀 property使用 name,value-->
-            <bean id="personService" class="com.cnblog.yc610039525.spring.PersonService">
+            <bean id="personService" class="com.team.cd.spring.PersonService">
               <property name="name" value="wawa"></property>
             </bean>
             
@@ -25,11 +25,11 @@
                property使用 name,ref,ref也是一个bean的id,ref 
                                      可以在stoneAxe和steelAxe之间随意切换,而不用修改java代码 
             -->
-            <bean id="chinese" class="com.cnblog.yc610039525.ioc.setter.Chinese">
+            <bean id="chinese" class="com.team.cd.ioc.setter.Chinese">
               <property name="axe" ref="steelAxe"></property>
             </bean>
-            <bean id="stoneAxe" class="com.cnblog.yc610039525.ioc.setter.StoneAxe" /> 
-            <bean id="steelAxe" class="com.cnblog.yc610039525.ioc.setter.SteelAxe" /> 
+            <bean id="stoneAxe" class="com.team.cd.ioc.setter.StoneAxe" /> 
+            <bean id="steelAxe" class="com.team.cd.ioc.setter.SteelAxe" /> 
             
             <!-- 
                                           构造注入
@@ -37,7 +37,7 @@
                 ref也是一个bean的id,ref 可以在stoneAxe和steelAxe之间随意切换,而不用修改java代码
                 constructor-arg 也可以配置value,表示传递给构造函数的是一个 普通的值,而不是另一个bean 
             -->
-            <bean id="chinese1" class="com.cnblog.yc610039525.ioc.constructor.Chinese">
+            <bean id="chinese1" class="com.team.cd.ioc.constructor.Chinese">
               <constructor-arg ref="steelAxe" /> 
             </bean>
             
@@ -56,31 +56,27 @@
 			    在Spring中配置了实现ApplicationListener接口的Bean,
               Spring容器就会把这个Bean当成容器事件的监听器
             -->
-            <bean class="com.cnblog.yc610039525.springevent.EmainNotifier" /> 
-            
-            <!-- bean中获取 ApplicationContext引用-->
-            <bean name="beangetappcontext" 
-            class="com.cnblog.yc610039525.bean.get.appcontext.BeanGetAppContext" />
-            
+            <bean class="com.team.cd.springevent.EmainNotifier" /> 
+                       
             <!-- AOP测试的chinese -->
             <bean id="chinese_aop" 
-            class="com.cnblog.yc610039525.aop.Chinese" />
+            class="com.team.cd.aop.Chinese" />
             <!-- 定义一个普通bean,作为切面bean  切面（Aspect） -->
             <bean id="accessArgAspect" 
-            class="com.cnblog.yc610039525.aop.aspect.AccessArgAspect" />
+            class="com.team.cd.aop.aspect.AccessArgAspect" />
             
             <!-- AOP配置  --> 
             <aop:config>
               <aop:aspect id="aspect" ref="accessArgAspect">
                 <aop:after-returning 
-                  pointcut="execution(* com.cnblog.yc610039525.aop.*.*(..)) and args(food,time,..)" 
+                  pointcut="execution(* com.team.cd.aop.*.*(..)) and args(food,time,..)" 
                   method="access"
                   returning="retval"
                   arg-names="time,food,retval" 
                 />
                 <!-- 切入点（Pointcut） -->
                 <aop:before 
-                  pointcut="execution(* com.cnblog.yc610039525.aop.*.*(..)) and args(food,time,..)" 
+                  pointcut="execution(* com.team.cd.aop.*.*(..)) and args(food,time,..)" 
                   method="accessWithJoinPoint"
                 />
                 
@@ -88,7 +84,7 @@
             </aop:config>
             <!-- 启用Spring对@AspectJ的支持 -->
            <aop:aspectj-autoproxy proxy-target-class="true"/>
-           <bean  class="com.cnblog.yc610039525.aop.aspect.NotVeryUsefulAspect" />
+           <bean  class="com.team.cd.aop.aspect.NotVeryUsefulAspect" />
      <!-- 
 		在 Spring 中读取properties属性，以及环境变量 系统属性
 	 -->
@@ -101,7 +97,7 @@
 		    </property>
 	 </bean>
      
-     <bean id="SysConfigHelper" class="com.cnblog.yc610039525.sys.SysConfigHelper">
+     <bean id="SysConfigHelper" class="com.team.cd.sys.SysConfigHelper">
     	<property name="PROP" value="${CATALINA_HOME}">
     	</property>
      </bean>
@@ -115,7 +111,6 @@
   <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
     <property name="configLocation" value="classpath:ehcache.xml"/>
   </bean>
-
   <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
     <property name="cacheManager" ref="ehcache"/>
   </bean>

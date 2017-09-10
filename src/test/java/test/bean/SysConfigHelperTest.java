@@ -2,9 +2,11 @@ package test.bean;
 
 import org.junit.Test;
 
+import com.team.cd.sys.SysConfigHelper;
+
+
 import base.SpringTestBaseCase;
 
-import com.cnblog.yc610039525.sys.SysConfigHelper;
 
 public class SysConfigHelperTest extends SpringTestBaseCase {
 	

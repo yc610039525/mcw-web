@@ -23,36 +23,40 @@ String basePath = request.getScheme()+
   
   <body>
     <hr>
-    <%="协议request.getScheme()："+request.getScheme()+"，服务名request.getServerName()："+
-       request.getServerName()+"，端口request.getServerPort()："
-       +request.getServerPort()+"，上下文根路径request.getContextPath()："+path+"，资源路径request.getServletPath()："+
-       request.getServletPath()%>
+    <hr>
+    <p>http://localhost/spring.framework</p>
+    <hr>
+    <hr>
+    <p>协议request.getScheme()：<%=request.getScheme()%></p>
+    <p>服务名request.getServerName()：<%=request.getServerName()%></p>
+    <p>端口request.getServerPort()：<%=request.getServerPort()%></p>
+    <p>上下文根路径request.getContextPath()：<%=request.getContextPath()%></p>
+    <p>登陆IPrequest.getRemoteAddr()：<%=request.getRemoteAddr()%></p>
+    <p>资源路径request.getServletPath()：<%=request.getServletPath()%></p>
 	<hr>
-	<%
-	 String addr=request.getRemoteAddr();
-	 %>
-	<%="你的登陆IP是："+addr%>
 	<hr>
+	<p>http://localhost/spring.framework/cxf/helloWorld?wsdl</p>
+	
+	<a href="getUserInfo.do">Controller use response PrintWriter write String to Brower </a>
+	<hr>
+	<hr>
+	<p> &lt;img style="cursor:pointer;" src="checkcode.do" border="1" onclick="this.src='checkcode.do?' + Math.random();"/&gt;</p>
 	<form action="login.do" method="post">
 	<label>name:</label>
 	<input name="name" />   
 	<label>password:</label>
 	<input name="pwd" type="password" />
 	<label>code:</label>
-	<%--response.setIntHeader("Refresh", 5);--%>
-	<%--JSP验证码图片还未生成，获取不到session数据 --%>
+	<%--response.setIntHeader("Refresh", 5);--%><%--JSP验证码图片还未生成，获取不到session数据 --%>
 	<input name="code" value="<%=session.getAttribute("code") %>">
-	<img style="cursor:pointer;" src="checkcode.do" border="1" 
-		onclick="this.src='checkcode.do?' + Math.random();"/>&nbsp;&nbsp;
-	
+	<img style="cursor:pointer;" src="checkcode.do" border="1" onclick="this.src='checkcode.do?' + Math.random();"/>&nbsp;&nbsp;
 	<c:if test="${sessionScope.isLogin eq false}" >
 	<span>
 	${sessionScope.errorMsg}
 	</span>
 	</c:if>
-	<button type="submit">登录</button>
+	<button type="submit">login</button>
 	</form>
-	<button onclick="">获取用户信息</button>
-	<a href="getUserInfo.do">获取用户信息2</a>
+	
   </body>
 </html>

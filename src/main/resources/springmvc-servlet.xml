@@ -49,8 +49,7 @@
             <mvc:exclude-mapping path="/login.html" />
             <mvc:exclude-mapping path="/checkcode.do" /> 
             <mvc:exclude-mapping path="/getUserInfo.do" /> 
-            <mvc:exclude-mapping path="/webService/getWeather.do" /> 
-            <bean class="com.cnblog.yc610039525.userinterceptor.UserSecurityInterceptor"/>  
+            <bean class=" com.team.cd.interceptor.UserSecurityInterceptor"/>  
         </mvc:interceptor>  
     </mvc:interceptors>
      
@@ -76,7 +75,7 @@
 	@ResponseBody
 	@Scope("prototype")   设定bean的作用域
     -->
-     <context:component-scan base-package="com.cnblog"/>
+     <context:component-scan base-package="com.team.cd"/>
      <!-- 配置json响应 -->
      <mvc:annotation-driven>  
         <mvc:message-converters register-defaults="true">  

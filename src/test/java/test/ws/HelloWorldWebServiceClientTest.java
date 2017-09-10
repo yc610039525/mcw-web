@@ -1,17 +1,24 @@
 package test.ws;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+import org.junit.Test;
 
-import com.cnblog.yc610039525.ws.IHelloWorld;
+import base.SpringTestBaseCase;
 
-public class HelloWorldWebServiceClientTest {
-	private final static String ADDRESS = "http://localhost/spring.framework/cxf/helloWorld";  
-	   public static void main(String args[]) {  
-	      JaxWsProxyFactoryBean jwpFactory = new JaxWsProxyFactoryBean();  
+import com.team.cd.ws.IHelloWorld;
+
+
+
+public class HelloWorldWebServiceClientTest extends SpringTestBaseCase {
+	  
+	@Test public  void helloWorldWebServiceTest(){
+	      String ADDRESS = "http://localhost/spring.framework/cxf/helloWorld";
+		  JaxWsProxyFactoryBean jwpFactory = new JaxWsProxyFactoryBean();  
 	      jwpFactory.setAddress(ADDRESS);  
 	      jwpFactory.setServiceClass(IHelloWorld.class);  
-	      IHelloWorld hw = (IHelloWorld)jwpFactory.create();  
+	      IHelloWorld hw = (IHelloWorld)jwpFactory.create(); 
 	      String response = hw.sayHi("world");  
 	      System.out.println(response); 
+	     
 	   }  
 }

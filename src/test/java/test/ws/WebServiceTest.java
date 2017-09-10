@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com._36wu.ResultOfTodayWeather;
-import com._36wu.WeatherServiceSoap;
 
 public class WebServiceTest {
 	Logger logger=Logger.getLogger("WebServiceTest");
@@ -18,9 +16,7 @@ public class WebServiceTest {
 	}
 	@Test
 	public void getWeatherTest() {
-		WeatherServiceSoap weatherServiceSoap = (WeatherServiceSoap)context.getBean("weatherServiceSoap"); 
-		ResultOfTodayWeather weather = weatherServiceSoap.getWeather("武漢", "");
-		logger.info(weather);
+		
 	}
 
 }
