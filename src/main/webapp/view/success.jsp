@@ -8,7 +8,7 @@ String basePath = request.getScheme()+
 %>
 <html>
   <head>
-    <title>login</title>
+    <title>登录成功</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -20,9 +20,17 @@ String basePath = request.getScheme()+
   </head>
   
   <body>
-	<p>登陆成功，即将跳转到新页面......</p>
-	<%
-		System.out.println("登陆成功，即将跳转到新页面......");
-	%>
+	<script>
+		 var t=3;
+		 window.setInterval("refer()",1000); 
+		 function refer(){
+			 if(t==0){
+			 location="/spring.framework/html/index.html"; 
+			 }
+			 document.getElementById('show').innerHTML="登陆成功，"+t+"秒后即将跳转到新页面"; 
+			t--; 
+		 }
+	</script>
+	<span id="show"></span>
   </body>
 </html>

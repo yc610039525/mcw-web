@@ -1,10 +1,12 @@
 package com.team.cd.controller;
 
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import com.alibaba.fastjson.JSON;
+import com.team.cd.common.utils.ImageUtils;
 import com.team.cd.model.User;
 import com.team.cd.ws.IHelloWorld;
 
@@ -32,19 +35,19 @@ public class LoginController{
         HttpSession session = request.getSession();
         session.setAttribute("name", name);
         session.setAttribute("pwd", pwd);
-        String attribute =(String)session.getAttribute("name");
         
+        
+        String code =(String)session.getAttribute("code");        
         ServletContext applcontext = request.getSession().getServletContext();
-        String servletContext=(String)applcontext.getInitParameter("servletContext");
-        System.out.println(servletContext);
-        
+        String servletContext=(String)applcontext.getInitParameter("webParam");
+        System.out.println("code:"+code);
+        System.out.println("servletContext:"+servletContext);
         String method = request.getMethod();
         System.out.println("请求方式为:"+method);
-        
 //      "forward:/view/success" "redirect:/view/success"
         Cookie cookie= new Cookie("name", "xiaoming");
         cookie.setPath("/");
-//      Cookie[] cookies = request.getCookies();
+        Cookie[] cookies = request.getCookies();
         response.addCookie(cookie);
         
         return "redirect:/view/success.jsp";
@@ -53,13 +56,13 @@ public class LoginController{
 	@RequestMapping("/checkcode.do")
     public void getCode(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		
-		String ADDRESS = "http://localhost/spring.framework/cxf/helloWorld";
-	    JaxWsProxyFactoryBean jwpFactory = new JaxWsProxyFactoryBean();  
-        jwpFactory.setAddress(ADDRESS);  
-        jwpFactory.setServiceClass(IHelloWorld.class);  
-        IHelloWorld hw = (IHelloWorld)jwpFactory.create(); 
-        String responseText = hw.sayHi("world");  
-        System.out.println(responseText); 
+//		String ADDRESS = "http://localhost/spring.framework/cxf/helloWorld";
+//	    JaxWsProxyFactoryBean jwpFactory = new JaxWsProxyFactoryBean();  
+//        jwpFactory.setAddress(ADDRESS);  
+//        jwpFactory.setServiceClass(IHelloWorld.class);  
+//        IHelloWorld hw = (IHelloWorld)jwpFactory.create(); 
+//        String responseText = hw.sayHi("world");  
+//        System.out.println(responseText); 
 	      
 		response.setHeader("Paragma", "no-cache");  
         response.setHeader("Cache-Control", "no-cache");  
@@ -69,13 +72,11 @@ public class LoginController{
 		//step2,要使用字节流输出
 		OutputStream os =response.getOutputStream();
 		//step3,压缩图片并输出
-//		String number=ImageHelper.getNumber(4);
-//		System.out.println("code:"+number);
-//		HttpSession session = request.getSession();
-//		session.removeAttribute("code");
-//		session.setAttribute("code", number);
-//		BufferedImage image = ImageHelper.drawCode(number);
-//		javax.imageio.ImageIO.write(image, "jpeg", os);
+		String number=ImageUtils.getNumber(4);
+		HttpSession session = request.getSession();
+		session.setAttribute("code", number);
+		BufferedImage image = ImageUtils.drawCode(number);
+		ImageIO.write(image, "jpeg", os);
 		os.close();
 		
 	}
