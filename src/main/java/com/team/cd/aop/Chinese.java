@@ -2,11 +2,6 @@ package com.team.cd.aop;
 
 import java.util.Date;
 
-/**
- * 
- *一个普通bean,eat方法和sayHello方法,是需要被切入,动态影响的
- *
- */
 public class Chinese implements Person
 {
 
@@ -21,14 +16,14 @@ public class Chinese implements Person
   {
     return name + " Hello, Spring AOP.";
   }
-  
-  public void eat2(String afood, Date atime,String test)
+  @Override
+  public void eat2(String food, Date time,String address)
   {
-    System.out.println("eat2 --------- 正在吃: " + afood + ", 时间是: " + atime + ", eat2里面的test= " + test);
+    System.out.println("Chinese --------- 正在吃: " + food + ", 时间是: " + time + ", 地點: " + address);
   }
-
-  public void eat3(String afood, Date atime,String test)
+  @Override
+  public void eat3(String food, Date time,String address)
   {
-	    System.out.println("eat3 --------- 正在吃: " + afood + ", 时间是: " + atime + ", eat2里面的test= " + test);
+	    System.out.println("Chinese --------- 正在吃: " + food + ", 时间是: " + time + ",地點: " + address);
 	  }
 }

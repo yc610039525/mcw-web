@@ -62,29 +62,27 @@
             <bean id="chinese_aop" 
             class="com.team.cd.aop.Chinese" />
             <!-- 定义一个普通bean,作为切面bean  切面（Aspect） -->
-            <bean id="accessArgAspect" 
-            class="com.team.cd.aop.aspect.AccessArgAspect" />
+            <bean id="XmlAspect" class="com.team.cd.aop.aspect.XmlAspect" />
             
             <!-- AOP配置  --> 
             <aop:config>
-              <aop:aspect id="aspect" ref="accessArgAspect">
+              <aop:aspect id="aspect" ref="XmlAspect">
                 <aop:after-returning 
-                  pointcut="execution(* com.team.cd.aop.*.*(..)) and args(food,time,..)" 
-                  method="access"
+                  pointcut="execution(* com.team.cd.aop.*.*(..))" 
+                  method="afterReturn"
                   returning="retval"
-                  arg-names="time,food,retval" 
                 />
-                <!-- 切入点（Pointcut） -->
+                <!-- pointcut="execution(* com.team.cd.aop.*.*(..)) and args(food,time,..)"  -->
                 <aop:before 
-                  pointcut="execution(* com.team.cd.aop.*.*(..)) and args(food,time,..)" 
-                  method="accessWithJoinPoint"
+                  pointcut="execution(* com.team.cd.aop.*.*(..))" 
+                  method="before"
                 />
                 
               </aop:aspect> 
             </aop:config>
             <!-- 启用Spring对@AspectJ的支持 -->
            <aop:aspectj-autoproxy proxy-target-class="true"/>
-           <bean  class="com.team.cd.aop.aspect.NotVeryUsefulAspect" />
+           <bean  class="com.team.cd.aop.aspect.AnnotionAspect" />
      <!-- 
 		在 Spring 中读取properties属性，以及环境变量 系统属性
 	 -->

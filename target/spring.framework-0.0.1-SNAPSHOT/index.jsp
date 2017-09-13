@@ -10,7 +10,7 @@ String basePath = request.getScheme()+
 %>
 <html>
   <head>
-    <title>login</title>
+    <title>登录</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -24,7 +24,7 @@ String basePath = request.getScheme()+
   <body>
     <hr>
     <hr>
-    <p>http://localhost/spring.framework</p>
+    <p>Spring框架搭建</p>
     <hr>
     <hr>
     <p>协议request.getScheme()：<%=request.getScheme()%></p>
@@ -47,15 +47,11 @@ String basePath = request.getScheme()+
 	<label>password:</label>
 	<input name="pwd" type="password" />
 	<label>code:</label>
-	<%--response.setIntHeader("Refresh", 5);--%><%--JSP验证码图片还未生成，获取不到session数据 --%>
-	<input name="code" value="<%=session.getAttribute("code") %>">
+	<%--response.setIntHeader("Refresh", 5);<%--JSP验证码图片还未生成，获取不到session数据 --%>
+	<input name="code" value="<%=session.getAttribute("code")==null?"":session.getAttribute("code") %>">
 	<img style="cursor:pointer;" src="checkcode.do" border="1" onclick="this.src='checkcode.do?' + Math.random();"/>&nbsp;&nbsp;
-	<c:if test="${sessionScope.isLogin eq false}" >
-	<span>
-	${sessionScope.errorMsg}
-	</span>
-	</c:if>
-	<button type="submit">form action="login.do" method="post"</button>
+	<c:if test="${sessionScope.isLogin eq false}"><span>${sessionScope.errorMsg}</span></c:if>
+	<button type="submit">LOGIN</button>
 	</form>
 	
   </body>
