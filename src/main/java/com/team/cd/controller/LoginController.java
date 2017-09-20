@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import com.alibaba.fastjson.JSON;
+import com.team.cd.annotation.SystemControllerLogger;
 import com.team.cd.common.utils.ImageUtils;
 import com.team.cd.model.User;
 import com.team.cd.ws.IHelloWorld;
@@ -28,6 +29,7 @@ import com.team.cd.ws.IHelloWorld;
 @Controller
 public class LoginController{
 	private static Logger logger=Logger.getLogger(LoginController.class);
+	@SystemControllerLogger
 	@RequestMapping("/login.do")
     public String login(HttpServletRequest request,HttpServletResponse response){
         String name = request.getParameter("name");
@@ -53,6 +55,7 @@ public class LoginController{
         return "redirect:/view/success.jsp";
     }
 	
+	@SystemControllerLogger
 	@RequestMapping("/checkcode.do")
     public void getCode(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		

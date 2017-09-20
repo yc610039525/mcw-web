@@ -5,16 +5,16 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Service;
 @Service
-//@Aspect
+@Aspect
 public class AnnotionAspect {
-	@Pointcut("execution(* com.team.cd.aop..*(..))")
+//	@Pointcut("execution(* com.team.cd.aop..*(..))")
 	private void pointCutLog() {
 	}
 	
-//	@Before("execution(* com.team.cd.aop..*(..))")  
-	@Before("pointCutLog()")  
+	@Before("execution(* com.team.cd.aop..*(..))")  
+//	@Before("pointCutLog()")  
     public void before(){  
-        System.out.println("@Before(\"execution(* com.team.cd.aop..*(..))\")");  
+        System.out.println("使用全注解配置AOP-@Service-@Aspect-@Pointcut-@Before");  
     }  
 
 	
