@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import base.SpringTestBaseCase;
 
-import com.team.cd.ws.IHelloWorld;
+import com.team.cd.ws.server.IHelloWorld;
 
 
 

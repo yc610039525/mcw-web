@@ -27,12 +27,6 @@ public class UserSecurityInterceptor  implements HandlerInterceptor{
 		boolean flag=false;
 		if(username!=null&&!username.isEmpty()){
 			if("admin".equals(username)||"000000".equals(pwd)){
-//				if(StringUtils.equalsIgnoreCase(code, (String)session.getAttribute("code"))){
-//					flag=true;	
-//				}else{
-//					System.out.println("验证码错误！");
-//					session.setAttribute("errorMsg", "验证码错误！");
-//				}
 				flag=true;
 			}else if(ignoreUrls!=null&&!ignoreUrls.isEmpty()){
 				for(String ignoreUrl : ignoreUrls){
@@ -52,7 +46,7 @@ public class UserSecurityInterceptor  implements HandlerInterceptor{
 		}
 		session.setAttribute("isLogin", flag);
 		System.out.println("UserSecurityInterceptor-preHandle():"+request.getServletPath()+(flag?"未被拦截":"被拦截"));
-		return flag;
+		return true;
 	}
 
 	@Override

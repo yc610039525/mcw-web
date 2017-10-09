@@ -13,23 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
-import com.team.cd.annotation.SystemControllerLogger;
-import com.team.cd.common.utils.ImageUtils;
+import com.team.cd.common.utils.annotation.SysLogger;
+import com.team.cd.common.utils.file.ImageUtils;
 import com.team.cd.model.User;
-import com.team.cd.ws.IHelloWorld;
 
 @Controller
 public class LoginController{
 	private static Logger logger=Logger.getLogger(LoginController.class);
-	@SystemControllerLogger
+	@SysLogger(description="login")
 	@RequestMapping("/login.do")
     public String login(HttpServletRequest request,HttpServletResponse response){
         String name = request.getParameter("name");
@@ -37,8 +37,6 @@ public class LoginController{
         HttpSession session = request.getSession();
         session.setAttribute("name", name);
         session.setAttribute("pwd", pwd);
-        
-        
         String code =(String)session.getAttribute("code");        
         ServletContext applcontext = request.getSession().getServletContext();
         String servletContext=(String)applcontext.getInitParameter("webParam");
@@ -51,11 +49,10 @@ public class LoginController{
         cookie.setPath("/");
         Cookie[] cookies = request.getCookies();
         response.addCookie(cookie);
-        
         return "redirect:/view/success.jsp";
     }
 	
-	@SystemControllerLogger
+	@SysLogger(description="checkcode")
 	@RequestMapping("/checkcode.do")
     public void getCode(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		
@@ -83,6 +80,7 @@ public class LoginController{
 		os.close();
 		
 	}
+	@SysLogger(description="getUserInfo")
 	@RequestMapping(value = "/getUserInfo.do",method = RequestMethod.GET)
 	public void getUserInfo(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		User user=new User();
@@ -100,5 +98,20 @@ public class LoginController{
 		out.close();
 	}
 	
-	
+	public Object getAttrFromSession(String attrName){
+		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+		Object obj = requestAttributes.getAttribute(attrName,RequestAttributes.SCOPE_SESSION);
+		return obj;
+	}
+	public HttpServletRequest getHttpServletRequest(){
+		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+		HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+		return request;
+	}
+//	public HttpServletResponse  getHttpServletResponse (){
+//		ResponseC
+//		RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+//		HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).get();
+//		return response;
+//	}
 }

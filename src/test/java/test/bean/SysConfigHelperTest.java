@@ -1,5 +1,8 @@
 package test.bean;
 
+import java.util.Date;
+
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.junit.Test;
 
 import com.team.cd.sys.SysConfigHelper;
@@ -13,6 +16,10 @@ public class SysConfigHelperTest extends SpringTestBaseCase {
 	@Test public void getEnvTest() {
 		SysConfigHelper bean = (SysConfigHelper)context.getBean("SysConfigHelper");
 		System.out.println("properties:"+bean.getEnv());
+		Date courrentDate=new Date();
+		String dateStr=DateFormatUtils.ISO_DATE_FORMAT.format(courrentDate);
+		String dateStr2=DateFormatUtils.ISO_DATETIME_FORMAT.format(courrentDate);
+		System.out.println(dateStr2);
 	}
 
 }

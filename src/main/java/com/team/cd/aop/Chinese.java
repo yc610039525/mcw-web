@@ -2,7 +2,7 @@ package com.team.cd.aop;
 
 import java.util.Date;
 
-public class Chinese implements Person
+public class Chinese implements IPerson
 {
 
   @Override

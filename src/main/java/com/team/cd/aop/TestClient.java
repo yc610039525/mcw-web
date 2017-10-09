@@ -14,10 +14,10 @@ public class TestClient
 {
   public static void main(String[] args)
   {
-    ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-bean.xml");
+    ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath*:applicationContext*.xml");
     System.out.println(ctx);
     
-    Person person = ctx.getBean("chinese_aop",Person.class);
+    IPerson person = ctx.getBean("chinese_aop",IPerson.class);
     
     person.sayHello("jack");
     person.eat("米饭",new Date());

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 	@RequestMapping("/success.do")
     public String login(HttpServletRequest request,HttpServletResponse response){
-        System.out.println("success.do...");
         HttpSession session = request.getSession();
         session.setAttribute("username", "mainView");
         return "/view/success";

@@ -10,7 +10,7 @@ public class SpringTestBaseCase {
 	protected static ApplicationContext context = null;
 	@BeforeClass
 	public static void preHandler(){
-		context = new ClassPathXmlApplicationContext("classpath*:spring*.xml");
+		context = new ClassPathXmlApplicationContext("classpath*:applicationContext*.xml");
 	}
 	@Before
 	public void before(){
