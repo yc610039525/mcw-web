@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+
 public class UserSecurityInterceptor  implements HandlerInterceptor{
-	
+	private static final Logger logger = Logger.getLogger(UserSecurityInterceptor.class);
 	List<String> ignoreUrls;
 	public void setIgnoreUrls(List<String> ignoreUrls) {
 		this.ignoreUrls = ignoreUrls;
@@ -45,20 +47,20 @@ public class UserSecurityInterceptor  implements HandlerInterceptor{
 
 		}
 		session.setAttribute("isLogin", flag);
-		System.out.println("UserSecurityInterceptor-preHandle():"+request.getServletPath()+(flag?"未被拦截":"被拦截"));
+		logger.info("HandlerInterceptor-preHandle():"+request.getServletPath()+(flag?"未被拦截":"被拦截"));
 		return true;
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request,HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		System.out.println("UserSecurityInterceptor-postHandle():preHandle()返回true执行postHandle()...");
+		logger.info("HandlerInterceptor-postHandle():preHandle()返回true执行postHandle()...");
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request,HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		System.out.println("UserSecurityInterceptor-afterCompletion():拦截完成后...一般用于日志处理");
+		logger.info("HandlerInterceptor-afterCompletion():拦截完成后...一般用于日志处理");
 	}
 
 }
