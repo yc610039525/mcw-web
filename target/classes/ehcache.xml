@@ -15,8 +15,8 @@
           diskExpiryThreadIntervalSeconds="120"
           memoryStoreEvictionPolicy="LRU"/>
 
-  <!-- helloworld缓存 -->
-  <cache name="helloworld"
+  <!-- xmlCache缓存 -->
+  <cache name="xmlCache"
          maxElementsInMemory="1000"
          eternal="false"
          timeToIdleSeconds="5"
