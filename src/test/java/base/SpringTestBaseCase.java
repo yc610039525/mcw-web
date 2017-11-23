@@ -14,10 +14,10 @@ public class SpringTestBaseCase {
 	}
 	@Before
 	public void before(){
-		System.out.println("测试开始====================");
+		System.out.println("****************************************************");
 	}
 	@After
 	public void after(){
-		System.out.println("测试结束====================");
+		System.out.println("****************************************************");
 	}
 }

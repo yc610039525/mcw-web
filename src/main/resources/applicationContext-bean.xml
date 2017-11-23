@@ -75,10 +75,10 @@
 	    </property>
 	</bean>
 	   
-	<!-- <bean id="SysConfigHelper" class="com.team.cd.sys.SysConfigHelper">
+	<bean id="SysConfigHelper" class="com.team.cd.sys.SysConfigHelper">
 		<property name="PROP" value="${CATALINA_HOME}">
 		</property>
-	</bean> -->
+	</bean>
 	     
 	<!-- 
 	<bean id="applicationContext" class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />     
