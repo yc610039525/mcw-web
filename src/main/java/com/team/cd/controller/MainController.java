@@ -7,9 +7,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.team.cd.common.utils.annotation.SysLogger;
+
 @Controller
 @RequestMapping("/view")
 public class MainController {
+	@SysLogger(description="登录成功")
 	@RequestMapping("/success.do")
     public String login(HttpServletRequest request,HttpServletResponse response){
         HttpSession session = request.getSession();

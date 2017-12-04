@@ -25,7 +25,7 @@ String basePath = request.getScheme()+
 		 window.setInterval("refer()",1000); 
 		 function refer(){
 			 if(t==0){
-			 location="/spring.framework/html/index.html"; 
+			 location="/mcw/html/index.html"; 
 			 }
 			 document.getElementById('show').innerHTML="登陆成功，"+t+"秒后即将跳转到新页面"; 
 			t--; 

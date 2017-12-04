@@ -77,7 +77,8 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>springMVC</servlet-name>
-    <url-pattern>*.do</url-pattern>
+    <url-pattern>/</url-pattern>
+<!--     <url-pattern>*.do</url-pattern> -->
   </servlet-mapping>
   <context-param>
     <param-name>applicationContextParam</param-name>

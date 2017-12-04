@@ -20,25 +20,23 @@ import com.team.cd.common.utils.annotation.SysLogger;
 public class SysLoggerAspect {
 	private static final Logger lg = Logger.getLogger(SysLoggerAspect.class);
 	public SysLoggerAspect(){
-		lg.info("初始化控制层日志切面 .......");
+		lg.info("init syslog aspect ......");
 	}
 	@Pointcut("@annotation(com.team.cd.common.utils.annotation.SysLogger)")    
-    public  void controllerAnnotationAspect() {} 
-	
-	@Before("controllerAnnotationAspect()")    
-    public void annotationBefore(JoinPoint joinPoint) {    
-//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-//		System.out.println("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." 
-//		+ joinPoint.getSignature().getName() + "()"));  
-		System.out.println("连接点获取切点处的方法类属性  JoinPoint .......");
-	
+    public  void aspectPointcut() {} 
+	@Before("aspectPointcut()")    
+    public void annotationBefore(JoinPoint joinPoint) {
+		lg.info("ClassName:"+joinPoint.getTarget().getClass().getName());
+		lg.info("MethodName:"+joinPoint.getSignature().getName());
 	}   
 	@Pointcut("execution(* com.team.cd.controller.*.*(..))")    
     public  void controllerMdAspect() {} 
 	@Before("controllerMdAspect()")    
     public  void mdBefore(JoinPoint joinPoint) throws Exception {    
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-		System.out.println(annotationParamValue(joinPoint)+":"+"controllerMdAspect.......`");
+		String requestURI = request.getRequestURI();
+		lg.info(requestURI);
+		lg.info(annotationParamValue(joinPoint));
 	
 	} 
 	
@@ -46,14 +44,18 @@ public class SysLoggerAspect {
         String targetName = joinPoint.getTarget().getClass().getName();  
         String methodName = joinPoint.getSignature().getName();  
         Object[] arguments = joinPoint.getArgs();  
-        Class targetClass = Class.forName(targetName);  
+        Class<?> targetClass = Class.forName(targetName);  
         Method[] methods = targetClass.getMethods();  
         String description = "";  
         for (Method method : methods) {  
             if (method.getName().equals(methodName)) {  
-                Class[] clazzs = method.getParameterTypes();  
-                if (clazzs.length == arguments.length) {  
-                    description = method.getAnnotation(SysLogger.class).description(); 
+                @SuppressWarnings("rawtypes")
+				Class[] clazzs = method.getParameterTypes();  
+                if (clazzs.length == arguments.length) { 
+                	SysLogger lg = method.getAnnotation(SysLogger.class);
+                	if(lg!=null){
+                		description = lg.description();
+                	}
                     break;  
                 }  
             }  
