@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
+@SuppressWarnings("rawtypes")
 public class EmainNotifier implements ApplicationListener
 {
   Logger logger=Logger.getLogger(EmainNotifier.class);

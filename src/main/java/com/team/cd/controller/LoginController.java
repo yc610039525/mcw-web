@@ -48,7 +48,8 @@ public class LoginController {
 //		cookie.setPath("/");
 //		Cookie[] cookies = request.getCookies();
 //		response.addCookie(cookie);
-		return "redirect:/view/success.jsp";
+//		return "redirect:/view/success.jsp";
+		return "redirect:/view/FileImport.html";
 	}
 
 	@SysLogger(description = "获取验证码")
