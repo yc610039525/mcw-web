@@ -2,6 +2,9 @@ package com.team.cd.common.utils.event;
 
 import org.springframework.context.ApplicationEvent;
 
+/**
+ * 事件
+ */
 public class EmailEvent extends ApplicationEvent
 {
   private static final long serialVersionUID = -863973585019686490L;

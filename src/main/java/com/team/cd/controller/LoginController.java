@@ -22,14 +22,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
-import com.team.cd.common.utils.annotation.SysLogger;
+import com.team.cd.common.utils.annotation.LogMessage;
 import com.team.cd.common.utils.file.ImageUtils;
 import com.team.cd.model.User;
 
 @Controller
 public class LoginController {
 	private static Logger lg = Logger.getLogger(LoginController.class);
-	@SysLogger(description = "login")
+	@LogMessage(description = "login")
 	@RequestMapping("/login.do")
 	public String login(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
@@ -52,7 +52,7 @@ public class LoginController {
 		return "redirect:/view/FileImport.html";
 	}
 
-	@SysLogger(description = "获取验证码")
+	@LogMessage(description = "获取验证码")
 	@RequestMapping("/checkcode.do")
 	public void getCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setHeader("Paragma", "no-cache");
@@ -69,7 +69,7 @@ public class LoginController {
 
 	}
 
-	@SysLogger(description = "获取用户信息")
+	@LogMessage(description = "获取用户信息")
 	@RequestMapping(value = "/getUserInfo.do", method = RequestMethod.GET)
 	public void getUserInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		User user = new User();

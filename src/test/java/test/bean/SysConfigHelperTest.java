@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.junit.Test;
 
+import com.team.cd.aop.Chinese;
 import com.team.cd.sys.SysConfigHelper;
 
 
@@ -14,6 +15,8 @@ import base.SpringTestBaseCase;
 public class SysConfigHelperTest extends SpringTestBaseCase {
 	
 	@Test public void getEnvTest() {
+		Chinese cn = (Chinese)context.getBean("chinese_aop");
+		System.out.println(cn);
 		SysConfigHelper bean = (SysConfigHelper)context.getBean("SysConfigHelper");
 		System.out.println("properties:"+bean.getEnv());
 		Date courrentDate=new Date();

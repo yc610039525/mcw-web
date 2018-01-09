@@ -14,19 +14,6 @@
             http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/cache
         http://www.springframework.org/schema/cache/spring-cache-3.2.xsd"> 
-            
-	<!-- <bean id="personService" class="com.team.cd.service.PersonService">
-	  <property name="name" value="wawa"></property>
-	</bean>
-	<bean id="chinese" class="com.team.cd.ioc.setter.Chinese">
-	  <property name="axe" ref="steelAxe"></property>
-	</bean>
-	<bean id="stoneAxe" class="com.team.cd.ioc.setter.StoneAxe" /> 
-	<bean id="steelAxe" class="com.team.cd.ioc.setter.SteelAxe" /> 
-	<bean id="chinese1" class="com.team.cd.ioc.constructor.Chinese">
-	  <constructor-arg ref="steelAxe" /> 
-	</bean> -->
-	
 	<!-- 国际化 -->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 	   <property name="basenames" >
@@ -35,11 +22,10 @@
 	     </list>
 	   </property> 
 	</bean>
-	 
+	<bean class="com.team.cd.common.utils.bean.SpringContextUtils" />
 	 <!-- 
 		ApplicationContext的事件机制    在Spring中配置了实现ApplicationListener接口的Bean Spring容器就会把这个Bean当成容器事件的监听器
 	   -->
-	
 	<bean class="com.team.cd.common.utils.event.EmainNotifier" /> 
 	
 	<bean id="chinese_aop" class="com.team.cd.aop.Chinese" />

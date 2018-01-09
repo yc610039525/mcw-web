@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.team.cd.common.utils.annotation.SysLogger;
+import com.team.cd.common.utils.annotation.LogMessage;
 import com.team.cd.common.utils.file.ImageUtils;
 import com.team.cd.model.User;
 
@@ -32,7 +32,7 @@ public class HelloController {
 		u.setAddress("chengdu");
 		return u;
 	}
-	@SysLogger(description = "RPC")
+	@LogMessage(description = "RPC")
 	@RequestMapping("/get/code")
 	public void getCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setHeader("Paragma", "no-cache");
