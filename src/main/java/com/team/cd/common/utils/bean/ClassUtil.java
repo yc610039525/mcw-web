@@ -9,6 +9,7 @@ public class ClassUtil {
 	 * 获取到的参数 返回值 是Class
 	 * @param obj
 	 */
+	@SuppressWarnings("rawtypes")
 	public static void printClassMethodMessage(Object obj){
 		Class c = obj.getClass();
 		System.out.println("获取Name:"+c.getName());

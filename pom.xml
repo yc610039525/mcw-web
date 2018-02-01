@@ -61,18 +61,14 @@
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!-- Spring 4.0后不再支持 后面使用validation-api-->
-		<!--<dependency>  
-		    <groupId>javax.validation</groupId>  
-		    <artifactId>validation-api</artifactId>  
-		    <version>2.0.0.Alpha1</version>  
-		</dependency>
-		 -->
+		<!-- Spring 4.0后不再支持 后面使用validation-api -->
+		<!--<dependency> <groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
+			<version>2.0.0.Alpha1</version> </dependency> -->
 		<dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
-        </dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -161,24 +157,20 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- 	<dependency> -->
-		<!-- 		<groupId>org.apache.ws.commons.schema</groupId> -->
-		<!-- 		<artifactId>XmlSchema</artifactId> -->
-		<!-- 		<version>1.4.7</version> -->
-		<!-- 		<scope>provided</scope> -->
-		<!-- 	</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.ws.commons.schema</groupId> -->
+		<!-- <artifactId>XmlSchema</artifactId> -->
+		<!-- <version>1.4.7</version> -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.apache.ws.xmlschema</groupId>
 			<artifactId>xmlschema-core</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-		<!--
-			* compile，缺省值，适用于所有阶段，会随着项目一起发布。 *
-			provided，类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar。 *
-			runtime，只在运行时使用，如JDBC驱动，适用运行和测试阶段。 *
-			test，只在测试时使用，用于编译和运行测试代码。不会随项目发布。 *
-			system，类似provided，需要显式提供包含依赖的jar，Maven不会在Repository中查找它。
-		-->
+		<!-- * compile，缺省值，适用于所有阶段，会随着项目一起发布。 * provided，类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar。 
+			* runtime，只在运行时使用，如JDBC驱动，适用运行和测试阶段。 * test，只在测试时使用，用于编译和运行测试代码。不会随项目发布。 
+			* system，类似provided，需要显式提供包含依赖的jar，Maven不会在Repository中查找它。 -->
 
 		<dependency>
 			<groupId>javax.xml</groupId>
@@ -297,43 +289,71 @@
 					<warName>mcw</warName>
 					<archiveClasses>false</archiveClasses>
 				</configuration>
-				
-				 <!--<configuration>
-					<warSourceExcludes>
-					*/lib/analyzer-2.0.4.jar
-					</warSourceExcludes>
-					<webResources> 					
-						<resource> 
-						<directory>src/main/webapp</directory>
-						<targetPath>WEB-INF</targetPath> 
-						<filtering>true</filtering>
-						</resource>
-					</webResources> </configuration>
-				
-				 src/main/resources 下所有 xml 文件：需要变量替换 
-				
-					<resource> <directory>src/main/resources</directory>
-					<filtering>true</filtering> <includes> <include>**/*.xml</include>
-					</includes> </resource>
-				
-				 src/main/resources 下所有非 xml 文件：原样拷贝，不进行变量替换 
-				
-					<resource> <directory>src/main/resources</directory>
-					<filtering>false</filtering> <excludes> <exclude>**/*.xml</exclude>
-					</excludes> </resource> </webResources> 
-					</configuration>-->
+
+				<!--<configuration> <warSourceExcludes> */lib/analyzer-2.0.4.jar </warSourceExcludes> 
+					<webResources> <resource> <directory>src/main/webapp</directory> <targetPath>WEB-INF</targetPath> 
+					<filtering>true</filtering> </resource> </webResources> </configuration> 
+					src/main/resources 下所有 xml 文件：需要变量替换 <resource> <directory>src/main/resources</directory> 
+					<filtering>true</filtering> <includes> <include>**/*.xml</include> </includes> 
+					</resource> src/main/resources 下所有非 xml 文件：原样拷贝，不进行变量替换 <resource> <directory>src/main/resources</directory> 
+					<filtering>false</filtering> <excludes> <exclude>**/*.xml</exclude> </excludes> 
+					</resource> </webResources> </configuration> -->
 			</plugin>
-			<plugin>  
-	            <artifactId>maven-compiler-plugin</artifactId>  
-	            <configuration>  
-	                <source>1.6</source>  
-	                <target>1.6</target>  
-	                <encoding>UTF-8</encoding>  
-	            </configuration>  
-	        </plugin>  
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 		</plugins>
 		<filters>
 			<filter>src/main/resources/message_en_US.properties</filter>
 		</filters>
 	</build>
+	<profiles>
+		<profile>
+			<id>nexus</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>nexus</id>
+					<name>nexus-Repositories</name>
+					<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>nexus-public-snapshots</id>
+					<name>nexus-public-Repositories</name>
+					<url>http://maven.aliyun.com/nexus/content/repositories/snapshots/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>snapshots</id>
+					<name>Snapshots</name>
+					<url>http://182.18.57.5:8080/nexus/content/repositories/snapshots/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+						<updatePolicy>always</updatePolicy>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 </project>

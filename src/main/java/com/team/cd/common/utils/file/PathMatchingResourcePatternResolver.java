@@ -31,6 +31,7 @@ import org.springframework.util.StringUtils;
 public class PathMatchingResourcePatternResolver {
 	private static final Log logger = LogFactory.getLog(PathMatchingResourcePatternResolver.class);
 	private PathMatcher pathMatcher = new AntPathMatcher();
+	/**"classpath*:"*/
 	String CLASSPATH_ALL_URL_PREFIX = "classpath*:";
 	private final ResourceLoader resourceLoader;
 	private static Method equinoxResolveMethod;
@@ -54,6 +55,12 @@ public class PathMatchingResourcePatternResolver {
 	public PathMatcher getPathMatcher() {
 		return this.pathMatcher;
 	}
+	/**
+	 * resource对应URL协议以jar或zip开头
+	 * @param resource
+	 * @return
+	 * @throws IOException
+	 */
 	protected boolean isJarResource(Resource resource) throws IOException {
 		return ResourceUtils.isJarURL(resource.getURL());
 	}
@@ -62,11 +69,15 @@ public class PathMatchingResourcePatternResolver {
 		return getResourceLoader().getClassLoader();
 	}
 
-	
+	/**
+	 * 根据 locationPattern 查找资源
+	 * @param locationPattern
+	 * @return
+	 * @throws IOException
+	 */
 	protected Resource[] findPathMatchingResources(String locationPattern) throws IOException {
 		String rootDirPath = determineRootDir(locationPattern);
 		String subPattern = locationPattern.substring(rootDirPath.length());
-		//
 		Resource[] rootDirResources = getResources(rootDirPath);
 		Set<Resource> result = new LinkedHashSet<Resource>(16);
 		for (Resource rootDirResource : rootDirResources) {
@@ -81,15 +92,18 @@ public class PathMatchingResourcePatternResolver {
 				result.addAll(doFindPathMatchingFileResources(rootDirResource, subPattern));
 			}
 		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Resolved location pattern [" + locationPattern + "] to resources " + result);
-		}
 		return result.toArray(new Resource[result.size()]);
 	}
+	/**
+	 * 获取资源
+	 * @param locationPattern
+	 * @return
+	 * @throws IOException
+	 */
 	public Resource[] getResources(String locationPattern) throws IOException {
 		Assert.notNull(locationPattern, "Location pattern must not be null");
 		if (locationPattern.startsWith(CLASSPATH_ALL_URL_PREFIX)) {
-			//模糊路径处理
+			//模糊路径处理 * ?
 			if (getPathMatcher().isPattern(locationPattern.substring(CLASSPATH_ALL_URL_PREFIX.length()))) {
 				return findPathMatchingResources(locationPattern);
 			}
@@ -107,6 +121,7 @@ public class PathMatchingResourcePatternResolver {
 		}
 	}
 	protected String determineRootDir(String location) {
+		//"classpath:com/c/b/a/*.xml"
 		int prefixEnd = location.indexOf(":") + 1;
 		int rootDirEnd = location.length();
 		while (rootDirEnd > prefixEnd && getPathMatcher().isPattern(location.substring(prefixEnd, rootDirEnd))) {
@@ -117,6 +132,12 @@ public class PathMatchingResourcePatternResolver {
 		}
 		return location.substring(0, rootDirEnd);
 	}
+	/**
+	 * 匹配 location开头所有资源
+	 * @param location
+	 * @return
+	 * @throws IOException
+	 */
 	protected Resource[] findAllClassPathResources(String location) throws IOException {
 		String path = location;
 		if (path.startsWith("/")) {
@@ -133,6 +154,12 @@ public class PathMatchingResourcePatternResolver {
 	protected Resource convertClassLoaderURL(URL url) {
 		return new UrlResource(url);
 	}
+	/**
+	 * Resource 资源对应的URL的协议以bundle开头
+	 * @param original
+	 * @return
+	 * @throws IOException
+	 */
 	protected Resource resolveRootDirResource(Resource original) throws IOException {
 		if (equinoxResolveMethod != null) {
 			URL url = original.getURL();
@@ -142,6 +169,13 @@ public class PathMatchingResourcePatternResolver {
 		}
 		return original;
 	}
+	/**
+	 * 加载Jar资源
+	 * @param rootDirResource
+	 * @param subPattern
+	 * @return
+	 * @throws IOException
+	 */
 	protected Set<Resource> doFindPathMatchingJarResources(Resource rootDirResource, String subPattern)
 	throws IOException {
 		URLConnection con = rootDirResource.getURL().openConnection();
@@ -156,8 +190,7 @@ public class PathMatchingResourcePatternResolver {
 			jarFileUrl = jarCon.getJarFileURL().toExternalForm();
 			JarEntry jarEntry = jarCon.getJarEntry();
 			rootEntryPath = (jarEntry != null ? jarEntry.getName() : "");
-		}
-		else {
+		} else {
 			String urlFile = rootDirResource.getURL().getFile();
 			int separatorIndex = urlFile.indexOf(ResourceUtils.JAR_URL_SEPARATOR);
 			if (separatorIndex != -1) {
@@ -180,6 +213,7 @@ public class PathMatchingResourcePatternResolver {
 				rootEntryPath = rootEntryPath + "/";
 			}
 			Set<Resource> result = new LinkedHashSet<Resource>(8);
+			//查找jar资源
 			for (Enumeration<JarEntry> entries = jarFile.entries(); entries.hasMoreElements();) {
 				JarEntry entry = entries.nextElement();
 				String entryPath = entry.getName();
@@ -197,6 +231,11 @@ public class PathMatchingResourcePatternResolver {
 			}
 		}
 	}
+	/**
+	 * @param jarFileUrl
+	 * @return JarFile
+	 * @throws IOException
+	 */
 	protected JarFile getJarFile(String jarFileUrl) throws IOException {
 		if (jarFileUrl.startsWith(ResourceUtils.FILE_URL_PREFIX)) {
 			try {
@@ -218,10 +257,6 @@ public class PathMatchingResourcePatternResolver {
 			rootDir = rootDirResource.getFile().getAbsoluteFile();
 		}
 		catch (IOException ex) {
-			if (logger.isWarnEnabled()) {
-				logger.warn("Cannot search for matching files underneath " + rootDirResource +
-						" because it does not correspond to a directory in the file system", ex);
-			}
 			return Collections.emptySet();
 		}
 		return doFindMatchingFileSystemResources(rootDir, subPattern);
@@ -230,9 +265,6 @@ public class PathMatchingResourcePatternResolver {
 	 * 递归查找文件
 	 */
 	protected Set<Resource> doFindMatchingFileSystemResources(File rootDir, String subPattern) throws IOException {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Looking for matching resources in directory tree [" + rootDir.getPath() + "]");
-		}
 		Set<File> matchingFiles = retrieveMatchingFiles(rootDir, subPattern);
 		Set<Resource> result = new LinkedHashSet<Resource>(matchingFiles.size());
 		for (File file : matchingFiles) {
@@ -242,22 +274,12 @@ public class PathMatchingResourcePatternResolver {
 	}
 	protected Set<File> retrieveMatchingFiles(File rootDir, String pattern) throws IOException {
 		if (!rootDir.exists()) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Skipping [" + rootDir.getAbsolutePath() + "] because it does not exist");
-			}
 			return Collections.emptySet();
 		}
 		if (!rootDir.isDirectory()) {
-			if (logger.isWarnEnabled()) {
-				logger.warn("Skipping [" + rootDir.getAbsolutePath() + "] because it does not denote a directory");
-			}
 			return Collections.emptySet();
 		}
 		if (!rootDir.canRead()) {
-			if (logger.isWarnEnabled()) {
-				logger.warn("Cannot search for matching files underneath directory [" + rootDir.getAbsolutePath() +
-						"] because the application is not allowed to read the directory");
-			}
 			return Collections.emptySet();
 		}
 		String fullPattern = StringUtils.replace(rootDir.getAbsolutePath(), File.separator, "/");
@@ -273,25 +295,14 @@ public class PathMatchingResourcePatternResolver {
 	 * 递归解析文件
 	 */
 	protected void doRetrieveMatchingFiles(String fullPattern, File dir, Set<File> result) throws IOException {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Searching directory [" + dir.getAbsolutePath() +
-					"] for files matching pattern [" + fullPattern + "]");
-		}
 		File[] dirContents = dir.listFiles();
 		if (dirContents == null) {
-			if (logger.isWarnEnabled()) {
-				logger.warn("Could not retrieve contents of directory [" + dir.getAbsolutePath() + "]");
-			}
 			return;
 		}
 		for (File content : dirContents) {
 			String currPath = StringUtils.replace(content.getAbsolutePath(), File.separator, "/");
 			if (content.isDirectory() && getPathMatcher().matchStart(fullPattern, currPath + "/")) {
 				if (!content.canRead()) {
-					if (logger.isDebugEnabled()) {
-						logger.debug("Skipping subdirectory [" + dir.getAbsolutePath() +
-								"] because the application is not allowed to read the directory");
-					}
 				}
 				else {
 					doRetrieveMatchingFiles(fullPattern, content, result);
