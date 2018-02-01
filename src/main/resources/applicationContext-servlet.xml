@@ -50,7 +50,7 @@
             <mvc:exclude-mapping path="/checkcode.do" /> 
             <mvc:exclude-mapping path="/hello.do" /> 
             <mvc:exclude-mapping path="/getUserInfo.do" /> 
-            <bean class=" com.team.cd.interceptor.UserSecurityInterceptor"/>  
+            <bean class=" cn.cd.caoyeung.webapp.interceptor.UserSecurityInterceptor"/>  
         </mvc:interceptor>  
     </mvc:interceptors>
 	<!-- 

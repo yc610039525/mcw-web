@@ -22,26 +22,26 @@
 	     </list>
 	   </property> 
 	</bean>
-	<bean class="com.team.cd.common.utils.bean.SpringContextUtils" />
+	<bean class="cn.cd.caoyeung.webapp.utils.bean.SpringContextUtils" />
 	 <!-- 
 		ApplicationContext的事件机制    在Spring中配置了实现ApplicationListener接口的Bean Spring容器就会把这个Bean当成容器事件的监听器
 	   -->
-	<bean class="com.team.cd.common.utils.event.EmainNotifier" /> 
+	<bean class="cn.cd.caoyeung.webapp.utils.event.EmainNotifier" /> 
 	
-	<bean id="chinese_aop" class="com.team.cd.aop.Chinese" />
+	<bean id="chinese_aop" class="cn.cd.caoyeung.webapp.aop.Chinese" />
 	
-	<bean id="XmlAspect" class="com.team.cd.aop.aspect.XmlAspect"/>
+	<bean id="XmlAspect" class="cn.cd.caoyeung.webapp.aop.aspect.XmlAspect"/>
 	      
 	<aop:config>
 	  <aop:aspect id="aspect" ref="XmlAspect">
 	    <aop:after-returning 
-	      pointcut="execution(* com.team.cd.aop.*.*(..))" 
+	      pointcut="execution(* cn.cd.caoyeung.webapp.aop.*.*(..))" 
 	      method="afterReturn"
 	      returning="retval"
 	    />
 	    <!-- pointcut="execution(* com.team.cd.aop.*.*(..)) and args(food,time,..)"  -->
 	     <aop:before 
-	       pointcut="execution(* com.team.cd.*.*(..))" 
+	       pointcut="execution(* cn.cd.caoyeung.*.*(..))" 
 	       method="before"
 	     />
 	   </aop:aspect> 
@@ -51,7 +51,7 @@
 	<!-- 启用Spring对@AspectJ的支持 -->
    <aop:aspectj-autoproxy proxy-target-class="true"/>
    
-   <bean  class="com.team.cd.aop.aspect.AnnotionAspect"/>
+   <bean  class="cn.cd.caoyeung.webapp.aop.aspect.AnnotionAspect"/>
 	<bean id="configurerHelper"
 	   class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	    <property name="locations">
@@ -61,7 +61,7 @@
 	    </property>
 	</bean>
 	   
-	<bean id="SysConfigHelper" class="com.team.cd.sys.SysConfigHelper">
+	<bean id="SysConfigHelper" class="cn.cd.caoyeung.webapp.bean.SysConfigHelper">
 		<property name="PROP" value="${CATALINA_HOME}">
 		</property>
 	</bean>
@@ -83,7 +83,7 @@
 		<property name="cacheName" value="xmlCache" />
 	</bean>
 	
-	<bean id="cacheService" class="com.team.cd.common.utils.cache.EhCacheServiceImpl">
+	<bean id="cacheService" class="cn.cd.caoyeung.webapp.utils.cache.EhCacheServiceImpl">
 		<property name="cache"> <ref local="methodCache" /> </property>
 	</bean>
 	
